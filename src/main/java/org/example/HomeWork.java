@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,9 +24,24 @@ public class HomeWork extends BinaryIntSearchTree {
      * Сигнатуру метода не меняем
      */
     public List<Integer> findMaxDigits(int count, int upperBound) {
-        //TODO реализовать метод
-        return null;
+        List<Integer> result = new ArrayList<>();
+        findMaxDigitsHelper(root, upperBound, result, count);
+        return result;
     }
 
+    private void findMaxDigitsHelper(Node node, int upperBound, List<Integer> result, int count) {
+        if (node == null || result.size() >= count) {
+            return;
+        }
 
+        if (node.value <= upperBound) {
+            findMaxDigitsHelper(node.right, upperBound, result, count);
+            if (result.size() < count) {
+                result.add(node.value);
+            }
+            findMaxDigitsHelper(node.left, upperBound, result, count);
+        } else {
+            findMaxDigitsHelper(node.left, upperBound, result, count);
+        }
+    }
 }
